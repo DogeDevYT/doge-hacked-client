@@ -9,7 +9,7 @@ import de.Hero.settings.SettingsManager;
 import org.lwjgl.opengl.Display;
 
 public class Doge {
-    public String name = "Doge", version = "1.4-REL", creator = "Salty_Scrimp";
+    public String name = "Doge", version = "1.5-REL", creator = "Salty_Scrimp";
 
     public static Doge instance = new Doge();
 

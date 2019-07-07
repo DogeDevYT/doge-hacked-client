@@ -10,6 +10,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
 public class PlayerUtils {
+    private static Minecraft mc = Minecraft.getMinecraft();
+
     public static boolean isInLiquid() {
         for(int x = MathHelper.floor_double(Minecraft.getMinecraft().thePlayer.boundingBox.minY); x < MathHelper.floor_double(Minecraft.getMinecraft().thePlayer.boundingBox.maxX) + 1; ++x) {
             for(int z = MathHelper.floor_double(Minecraft.getMinecraft().thePlayer.boundingBox.minZ); z < MathHelper.floor_double(Minecraft.getMinecraft().thePlayer.boundingBox.maxZ) + 1; ++z) {
@@ -39,4 +41,13 @@ public class PlayerUtils {
         }
         return false;
     }
+
+    public static boolean isMoving() {
+        if (!mc.thePlayer.isCollidedHorizontally && !mc.thePlayer.isSneaking()) {
+            return (mc.thePlayer.movementInput.moveForward != 0.0F || mc.thePlayer.movementInput.moveStrafe != 0.0F);
+        }
+        return false;
+    }
+
+    public static boolean isMoving2() { return (mc.thePlayer.moveForward != 0.0F || mc.thePlayer.moveStrafing != 0.0F); }
 }
