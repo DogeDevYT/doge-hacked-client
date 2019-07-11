@@ -1,5 +1,6 @@
 package net.minecraft.entity;
 
+import com.dogedev.doge.event.events.EventJump;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
@@ -1559,6 +1560,13 @@ public abstract class EntityLivingBase extends Entity
 
         if (this.isPotionActive(Potion.jump))
         {
+            EventJump eventJump = new EventJump(this.motionY, true);
+            eventJump.call();
+
+            if (eventJump.isCancelled()) {
+                return;
+            }
+
             this.motionY += (double)((float)(this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F);
         }
 

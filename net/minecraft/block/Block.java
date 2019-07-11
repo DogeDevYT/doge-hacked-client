@@ -3,7 +3,11 @@ package net.minecraft.block;
 import java.util.List;
 import java.util.Random;
 
+import com.dogedev.doge.Doge;
 import com.dogedev.doge.event.events.EventCollide;
+import com.dogedev.doge.module.ModuleManager;
+import com.dogedev.doge.module.modules.render.XRay;
+import com.dogedev.doge.utils.XRayUtils;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -450,6 +454,10 @@ public class Block
 
     public int getMixedBrightnessForBlock(IBlockAccess worldIn, BlockPos pos)
     {
+        if (Doge.instance.moduleManager.getModuleByName("XRay").isToggled()) {
+            return 1000;
+        }
+
         Block block = worldIn.getBlockState(pos).getBlock();
         int i = worldIn.getCombinedLight(pos, block.getLightValue());
 
@@ -467,6 +475,10 @@ public class Block
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
+        if (Doge.instance.moduleManager.getModule(XRay.class).isToggled()) {
+            return XRayUtils.isXrayBlock(this);
+        }
+
         return side == EnumFacing.DOWN && this.minY > 0.0D ? true : (side == EnumFacing.UP && this.maxY < 1.0D ? true : (side == EnumFacing.NORTH && this.minZ > 0.0D ? true : (side == EnumFacing.SOUTH && this.maxZ < 1.0D ? true : (side == EnumFacing.WEST && this.minX > 0.0D ? true : (side == EnumFacing.EAST && this.maxX < 1.0D ? true : !worldIn.getBlockState(pos).getBlock().isOpaqueCube())))));
     }
 
@@ -834,6 +846,10 @@ public class Block
 
     public EnumWorldBlockLayer getBlockLayer()
     {
+        XRay x = Doge.instance.moduleManager.getModule(XRay.class);
+        if (x.isToggled()) {
+            return XRayUtils.isXrayBlock(this) ? EnumWorldBlockLayer.SOLID : EnumWorldBlockLayer.TRANSLUCENT;
+        }
         return EnumWorldBlockLayer.SOLID;
     }
 
@@ -1102,6 +1118,9 @@ public class Block
      */
     public float getAmbientOcclusionLightValue()
     {
+        if (Doge.instance.moduleManager.getModule(XRay.class).isToggled()) {
+            return 1.0F;
+        }
         return this.isBlockNormalCube() ? 0.2F : 1.0F;
     }
 

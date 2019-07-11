@@ -5,6 +5,8 @@ import java.util.BitSet;
 import java.util.EnumSet;
 import java.util.Set;
 
+import com.dogedev.doge.Doge;
+import com.dogedev.doge.module.modules.render.XRay;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import optfine.IntegerCache;
@@ -21,6 +23,9 @@ public class VisGraph
 
     public void func_178606_a(BlockPos pos)
     {
+        if (Doge.instance.moduleManager.getModule(XRay.class).isToggled()) {
+            return;
+        }
         this.field_178612_d.set(getIndex(pos), true);
         --this.field_178611_f;
     }

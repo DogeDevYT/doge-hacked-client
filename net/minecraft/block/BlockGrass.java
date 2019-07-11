@@ -1,6 +1,9 @@
 package net.minecraft.block;
 
 import java.util.Random;
+
+import com.dogedev.doge.Doge;
+import com.dogedev.doge.module.modules.render.XRay;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -156,6 +159,9 @@ public class BlockGrass extends Block implements IGrowable
 
     public EnumWorldBlockLayer getBlockLayer()
     {
+        if (Doge.instance.moduleManager.getModule(XRay.class).isToggled()) {
+            return super.getBlockLayer();
+        }
         return EnumWorldBlockLayer.CUTOUT_MIPPED;
     }
 

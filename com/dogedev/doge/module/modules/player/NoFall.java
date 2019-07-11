@@ -5,9 +5,11 @@ import com.dogedev.doge.event.EventTarget;
 import com.dogedev.doge.event.events.EventPostMotionUpdate;
 import com.dogedev.doge.module.Category;
 import com.dogedev.doge.module.Module;
+import com.dogedev.doge.utils.BlockUtils;
 import com.dogedev.doge.utils.MovementUtils;
 import com.dogedev.doge.utils.TimeHelper;
 import de.Hero.settings.Setting;
+import net.minecraft.block.BlockSlime;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import org.lwjgl.input.Keyboard;
 
@@ -27,7 +29,7 @@ public class NoFall extends Module {
         options.add("LAAC");
         options.add("Basic");
         options.add("Hypixel");
-        Doge.instance.settingsManager.rSetting(new Setting("NoFall Mode", this, "AAC", options));
+        Doge.instance.settingsManager.rSetting(new Setting("NoFall Mode", this, "Basic", options));
     }
 
     @Override

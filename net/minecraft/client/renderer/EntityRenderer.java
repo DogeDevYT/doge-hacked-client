@@ -1,7 +1,9 @@
 package net.minecraft.client.renderer;
 
+import com.dogedev.doge.Doge;
 import com.dogedev.doge.event.Event;
 import com.dogedev.doge.event.events.Event3D;
+import com.dogedev.doge.module.modules.render.XRay;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
@@ -1094,7 +1096,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                         f10 = 1.0F;
                     }
 
-                    float f16 = this.mc.gameSettings.gammaSetting;
+                    float f16 = Doge.instance.moduleManager.getModule(XRay.class).isToggled() ? 10000.0F : this.mc.gameSettings.gammaSetting;
                     float f17 = 1.0F - f8;
                     float f13 = 1.0F - f9;
                     float f14 = 1.0F - f10;

@@ -4,12 +4,13 @@ import com.dogedev.doge.event.EventManager;
 import com.dogedev.doge.event.EventTarget;
 import com.dogedev.doge.event.events.EventKey;
 import com.dogedev.doge.module.ModuleManager;
+import com.dogedev.doge.utils.XRayUtils;
 import de.Hero.clickgui.ClickGUI;
 import de.Hero.settings.SettingsManager;
 import org.lwjgl.opengl.Display;
 
 public class Doge {
-    public String name = "Doge", version = "1.5-REL", creator = "Salty_Scrimp";
+    public String name = "Doge", version = "1.6-REL", creator = "Salty_Scrimp";
 
     public static Doge instance = new Doge();
 
@@ -23,8 +24,9 @@ public class Doge {
         eventManager = new EventManager();
         moduleManager = new ModuleManager();
         clickGui = new ClickGUI();
+        XRayUtils.initXRayBlocks();
 
-        System.out.println("[" + name + "] Starting client, b" + version + ", created by " + creator);
+        System.out.println("[" + name + "] Starting client, v" + version + ", created by " + creator);
         Display.setTitle(name + " v" + version);
 
         System.out.println("woof");

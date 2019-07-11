@@ -5,6 +5,7 @@ import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.util.*;
 
@@ -95,5 +96,17 @@ public class BlockUtils {
         double var7 = (double) MathHelper.sqrt_double(var1 * var1 + var3 * var3);
         double var9 = -Math.toDegrees(Math.atan(var5 / var7));
         return -MathHelper.wrapAngleTo180_float(Minecraft.getMinecraft().thePlayer.rotationPitch - (float) var9);
+    }
+
+    public static Block getBlock(BlockPos pos) {
+        return Minecraft.getMinecraft().theWorld.getBlockState(pos).getBlock();
+    }
+
+    public static Block getBlockUnderPlayer(EntityPlayer player, float height) {
+        return getBlock(new BlockPos(player.posX, player.posY - height, player.posZ));
+    }
+
+    public static Block getBlockOverPlayer(EntityPlayer player, float height) {
+        return getBlock(new BlockPos(player.posX, player.posY + height, player.posZ));
     }
 }

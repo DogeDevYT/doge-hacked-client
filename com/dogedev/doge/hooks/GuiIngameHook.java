@@ -3,6 +3,7 @@ package com.dogedev.doge.hooks;
 import com.dogedev.doge.Doge;
 import com.dogedev.doge.module.Module;
 import com.dogedev.doge.module.ModuleManager;
+import com.dogedev.doge.module.modules.render.HUD;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -29,24 +30,32 @@ public class GuiIngameHook extends GuiIngame {
         this.mc.entityRenderer.setupOverlayRendering();
         GlStateManager.enableBlend();
 
-        GL11.glScaled(2.0, 2.0, 2.0);
-        int i = fontRenderer.drawString(Doge.instance.name, 2, 2, rainbow(0), true);
-        GL11.glScaled(0.5, 0.5, 0.5);
+        boolean fpsCounter = Doge.instance.settingsManager.getSettingByName("FPSCounter").getValBoolean();
 
-        fontRenderer.drawString(Doge.instance.version, i * 2, fontRenderer.FONT_HEIGHT * 2 - 7, rainbow(100), true);
-        fontRenderer.drawString("by " + Doge.instance.creator, 4, fontRenderer.FONT_HEIGHT * 2 + 2, rainbow(200), true);
+        if (Doge.instance.moduleManager.getModule(HUD.class).isToggled()) {
+            GL11.glScaled(2.0, 2.0, 2.0);
+            int i = fontRenderer.drawString(Doge.instance.name, 2, 2, rainbow(0), true);
+            GL11.glScaled(0.5, 0.5, 0.5);
 
-        AtomicInteger offset = new AtomicInteger(3);
-        AtomicInteger index = new AtomicInteger();
+            fontRenderer.drawString(Doge.instance.version, i * 2, fontRenderer.FONT_HEIGHT * 2 - 7, rainbow(100), true);
+            fontRenderer.drawString("by " + Doge.instance.creator, 4, fontRenderer.FONT_HEIGHT * 2 + 2, rainbow(200), true);
 
-        for (Module m : ModuleManager.getModules()) {
-            if (m.isToggled()) {
-                Gui.drawRect(res.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 7, offset.get() - 2, res.getScaledWidth(), offset.get() + 10, new Color(0, 0, 0, 161).getRGB());
-                Gui.drawRect(res.getScaledWidth() - 3, offset.get() - 2, res.getScaledWidth(), offset.get() + 10, rainbow(index.get() * 100));
-                fontRenderer.drawString(m.getDisplayName(), res.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 5, offset.get(), rainbow(index.get() * 100), true);
+            if (fpsCounter) {
+                renderFPS();
+            }
 
-                offset.addAndGet(fontRenderer.FONT_HEIGHT + 2);
-                index.getAndIncrement();
+            AtomicInteger offset = new AtomicInteger(3);
+            AtomicInteger index = new AtomicInteger();
+
+            for (Module m : ModuleManager.getModules()) {
+                if (m.isToggled()) {
+                    Gui.drawRect(res.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 7, offset.get() - 2, res.getScaledWidth(), offset.get() + 10, new Color(0, 0, 0, 161).getRGB());
+                    Gui.drawRect(res.getScaledWidth() - 3, offset.get() - 2, res.getScaledWidth(), offset.get() + 10, rainbow(index.get() * 100));
+                    fontRenderer.drawString(m.getDisplayName(), res.getScaledWidth() - fontRenderer.getStringWidth(m.getDisplayName()) - 5, offset.get(), rainbow(index.get() * 100), true);
+
+                    offset.addAndGet(fontRenderer.FONT_HEIGHT + 2);
+                    index.getAndIncrement();
+                }
             }
         }
     }
@@ -56,4 +65,10 @@ public class GuiIngameHook extends GuiIngame {
         rainbowState %= 360;
         return Color.getHSBColor((float) (rainbowState / 360.0f), 0.55f, 0.8f).getRGB();
     }
+
+    private void renderFPS() {
+        mc.fontRendererObj.drawStringWithShadow("FPS: " + Minecraft.getDebugFPS(), 4, (float) (getFontRenderer().FONT_HEIGHT * 4.2 - 7), rainbow(0));
+    }
+
+
 }

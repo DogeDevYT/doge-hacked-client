@@ -41,11 +41,11 @@ public class AutoPot extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        setDisplayName("AutoPot - " + pots);
     }
 
     @EventTarget
     public void EventPreMotionUpdates(final EventPreMotionUpdate event) {
+        setDisplayName("AutoPot - " + pots);
         if (updateCounter() == 0) {
             return;
         }

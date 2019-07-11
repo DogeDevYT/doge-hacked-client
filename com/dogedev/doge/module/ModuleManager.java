@@ -18,52 +18,57 @@ public class ModuleManager {
 
     public ModuleManager() {
         //COMBAT
-        modules.add(new KillAura());
-        modules.add(new AntiBot());
-        modules.add(new Criticals());
-        modules.add(new Velocity());
-        modules.add(new AutoPot());
-        modules.add(new FastBow());
-        modules.add(new MoreKB());
-        modules.add(new BowAimbot());
+        addModule(new KillAura());
+        addModule(new AntiBot());
+        addModule(new Criticals());
+        addModule(new Velocity());
+        addModule(new AutoPot());
+        addModule(new FastBow());
+        addModule(new MoreKB());
+        addModule(new BowAimbot());
 
         //MOVEMENT
-        modules.add(new Sprint());
-        modules.add(new Fly());
-        modules.add(new Step());
-        modules.add(new LongJump());
-        modules.add(new Speed());
-        modules.add(new Phase());
-        modules.add(new Jesus());
-        modules.add(new Teleport());
+        addModule(new Sprint());
+        addModule(new Fly());
+        addModule(new Step());
+        addModule(new LongJump());
+        addModule(new Speed());
+        addModule(new Phase());
+        addModule(new Jesus());
+        addModule(new Teleport());
+        addModule(new KeepSprint());
+        addModule(new FastLadder());
 
         //RENDER
-        modules.add(new Fullbright());
-        modules.add(new ESP());
-        modules.add(new Projectiles());
-        modules.add(new ESP2());
+        addModule(new Fullbright());
+        addModule(new ESP());
+        addModule(new Projectiles());
+        addModule(new ESP2());
+        addModule(new XRay());
+        addModule(new HUD());
+        addModule(new Chams());
 
         //PLAYER
-        modules.add(new NoFall());
-        modules.add(new AntiFire());
-        modules.add(new Zoot());
-        modules.add(new AntiLagback());
-        modules.add(new FlagDetector());
+        addModule(new NoFall());
+        addModule(new AntiFire());
+        addModule(new Zoot());
+        addModule(new AntiLagback());
+        addModule(new FlagDetector());
 
         //MISC
-        modules.add(new NoSwing());
-        modules.add(new ChestStealer());
-        modules.add(new MurdererFinder());
-        modules.add(new Panic());
+        addModule(new NoSwing());
+        addModule(new ChestStealer());
+        addModule(new MurdererFinder());
+        addModule(new Panic());
 
         //WORLD
-        modules.add(new Scaffold());
-        modules.add(new Hecker());
+        addModule(new Scaffold());
+        addModule(new Hecker());
 
         //Register modules above here --^
 
         //GUI
-        modules.add(new ClickGUI());
+        addModule(new ClickGUI());
     }
 
     public static ArrayList<Module> getModules() {
@@ -73,7 +78,15 @@ public class ModuleManager {
         return modules.stream().filter(module -> module.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
+    public static void addModule(Module m) {
+        modules.add(m);
+    }
+
     public Module getModule(String name, boolean caseSensitive) {
         return modules.stream().filter(mod -> !caseSensitive && name.equalsIgnoreCase(mod.getName()) || name.equals(mod.getName())).findFirst().orElse(null);
+    }
+
+    public <T extends Module> T getModule(Class<T> clazz) {
+        return (T) modules.stream().filter(mod -> mod.getClass() == clazz).findFirst().orElse(null);
     }
 }

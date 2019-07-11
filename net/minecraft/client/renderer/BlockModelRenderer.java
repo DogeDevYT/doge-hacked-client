@@ -2,6 +2,9 @@ package net.minecraft.client.renderer;
 
 import java.util.BitSet;
 import java.util.List;
+
+import com.dogedev.doge.Doge;
+import com.dogedev.doge.module.modules.render.XRay;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -49,6 +52,9 @@ public class BlockModelRenderer
         try
         {
             Block block = blockStateIn.getBlock();
+            if (Doge.instance.moduleManager.getModule(XRay.class).isToggled()) {
+                return renderModelAmbientOcclusion(blockAccessIn, modelIn, block, blockStateIn, blockPosIn, worldRendererIn, checkSides);
+            }
             return flag ? this.renderModelAmbientOcclusion(blockAccessIn, modelIn, block, blockStateIn, blockPosIn, worldRendererIn, checkSides) : this.renderModelStandard(blockAccessIn, modelIn, block, blockStateIn, blockPosIn, worldRendererIn, checkSides);
         }
         catch (Throwable throwable)

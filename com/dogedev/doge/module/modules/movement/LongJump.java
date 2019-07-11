@@ -2,6 +2,7 @@ package com.dogedev.doge.module.modules.movement;
 
 import com.dogedev.doge.Doge;
 import com.dogedev.doge.event.EventTarget;
+import com.dogedev.doge.event.events.EventJump;
 import com.dogedev.doge.event.events.EventPostMotionUpdate;
 import com.dogedev.doge.event.events.EventPreMotionUpdate;
 import com.dogedev.doge.module.Category;
@@ -141,6 +142,14 @@ public class LongJump extends Module {
                 }
                 this.air += x2;
             }
+        }
+    }
+
+    @EventTarget
+    public void onJump(EventJump event) {
+        boolean glide = Doge.instance.settingsManager.getSettingByName("NCPGlide").getValBoolean();
+        if (event.isPre()) {
+            event.setMotionY(glide ? 0.425D : 0.425D);
         }
     }
 

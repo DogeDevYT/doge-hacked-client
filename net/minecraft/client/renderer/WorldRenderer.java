@@ -7,6 +7,10 @@ import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 import java.util.Arrays;
 import java.util.BitSet;
+
+import com.dogedev.doge.Doge;
+import com.dogedev.doge.module.modules.render.XRay;
+import com.dogedev.doge.utils.Colors;
 import net.minecraft.client.renderer.WorldRenderer$1;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;

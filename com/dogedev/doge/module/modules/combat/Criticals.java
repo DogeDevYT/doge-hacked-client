@@ -24,6 +24,7 @@ public class Criticals extends Module {
         ArrayList<String> options = new ArrayList<>();
         options.add("Packet");
         options.add("MiniJump");
+        options.add("Jump");
         Doge.instance.settingsManager.rSetting(new Setting("Criticals Mode", this, "Packet", options));
     }
 
@@ -53,6 +54,9 @@ public class Criticals extends Module {
                     if(mode.equalsIgnoreCase("MiniJump")) {
                         mc.thePlayer.jump();
                         mc.thePlayer.motionY -= .30000001192092879;
+                    }
+                    if (mode.equalsIgnoreCase("Jump")) {
+                        mc.thePlayer.jump();
                     }
                 }
             }

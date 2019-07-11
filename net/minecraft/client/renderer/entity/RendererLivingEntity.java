@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import com.dogedev.doge.event.events.EventRenderEntity;
 import com.google.common.collect.Lists;
 import java.nio.FloatBuffer;
 import java.util.List;
@@ -91,6 +92,12 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
      */
     public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
+        EventRenderEntity eventRenderEntity = new EventRenderEntity(entity, true);
+        eventRenderEntity.call();
+        if (eventRenderEntity.isCancelled()) {
+            return;
+        }
+
         GlStateManager.pushMatrix();
         GlStateManager.disableCull();
         this.mainModel.swingProgress = this.getSwingProgress(entity, partialTicks);
